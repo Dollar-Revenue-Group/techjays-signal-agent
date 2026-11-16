@@ -1,0 +1,35 @@
+name: Scrape estimator jobs (free)
+
+on:
+  schedule:
+    - cron: "0 11 * * 1-5"   # weekdays 11:00 UTC = 6 AM ET (7 AM during daylight time)
+  workflow_dispatch:
+    inputs:
+      hours_old:
+        description: "How many hours back to search"
+        required: false
+        default: "72"
+
+concurrency:
+  group: scrape-jobs
+  cancel-in-progress: false
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: scraper/requirements.txt
+      - run: pip install -r scraper/requirements.txt
+      - name: Scrape and send to n8n
+        env:
+          N8N_BASE: ${{ secrets.N8N_BASE }}
+          N8N_INGEST_CODE: ${{ secrets.N8N_INGEST_CODE }}
+          N8N_TEAM_CODE: ${{ secrets.N8N_TEAM_CODE }}
+          HOURS_OLD: ${{ github.event.inputs.hours_old || '72' }}
+        run: python scraper/scrape.py
