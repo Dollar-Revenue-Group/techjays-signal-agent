@@ -132,10 +132,13 @@ def send(jobs):
 
 
 def main():
-    if not BASE or not INGEST_CODE:
-        sys.exit("Set N8N_BASE and N8N_INGEST_CODE.")
     jobs = collect()
     print(f"Total estimator/quoting posts kept: {len(jobs)}")
+    for j in jobs[:15]:
+        print(f"  - {j['company']} | {j['job_title']} | {j['location']} | {j['employees_text'] or 'size ?'}")
+    if not BASE or not INGEST_CODE:
+        print("Dry run: N8N_BASE / N8N_INGEST_CODE secrets are not set, so nothing was sent to n8n.")
+        return
     if not jobs:
         print("Nothing new to send.")
         return
