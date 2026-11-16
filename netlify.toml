@@ -1,5 +1,5 @@
 # Netlify settings for the Techjays estimator signal agent site.
-# The site is a single static page in /site. There is no build step.
+# The site is a single static page in /docs. There is no build step.
 #
 # Credit safety: on Netlify's credit-based plans a production deploy costs
 # 15 credits, while branch deploys and Deploy Previews cost 0 to create.
@@ -8,7 +8,7 @@
 # Only the `staging` branch deploy (staging--<site>.netlify.app) is built.
 
 [build]
-  publish = "site"
+  publish = "docs"
   command = ""
   ignore = "if [ \"$CONTEXT\" = \"production\" ]; then echo 'Production deploys are disabled for this repo'; exit 0; else exit 1; fi"
 

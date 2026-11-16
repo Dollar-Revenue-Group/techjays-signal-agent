@@ -14,11 +14,12 @@ This branch (`staging`) holds the site. `main` intentionally has no site, so no 
 - **Download all as CSV** and **CSV of this view** (current filter and search), 25 columns
 - **Run agent now** with live progress and the failure reason when a run stops
 
-## Where it runs today
+## Where it runs
 
-The page is served by n8n, at no Netlify cost:
-
-`https://n8n-bkfvq-u78038.vm.elestio.app/webhook/techjays-agent/app`
+- **GitHub Pages (from this `staging` branch, `/docs` folder):**
+  `https://dollar-revenue-group.github.io/techjays-signal-agent/`
+  Every push to `staging` republishes it within a minute or two.
+- **Backup copy served by n8n:** `https://n8n-bkfvq-u78038.vm.elestio.app/webhook/techjays-agent/app`
 
 ## How it is wired
 
@@ -41,8 +42,8 @@ Every call needs `?code=<team access code>`; a wrong code gets HTTP 401.
 
 ## Changing the site
 
-1. Edit `site/index.html` on this branch and open a pull request into `staging`.
-2. After merging, publish it to n8n:
+1. Edit `docs/index.html` on this branch and open a pull request into `staging`.
+2. Merging into `staging` updates GitHub Pages automatically. To refresh the n8n backup copy too:
    ```sh
    N8N_PUBLISH_CODE=<admin code> sh scripts/publish-to-n8n.sh
    ```
