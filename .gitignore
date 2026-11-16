@@ -1,0 +1,4 @@
+.netlify
+*.zip
+payload.json
+.env
